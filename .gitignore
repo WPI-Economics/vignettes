@@ -1,0 +1,6 @@
+vignettes_env
+vignettes.egg-info
+vignettes/.idea
+.idea
+vignettes/classes/__pycache__
+vignettes/classes/tests/__pycache__
