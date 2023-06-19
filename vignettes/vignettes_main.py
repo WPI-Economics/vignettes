@@ -48,6 +48,9 @@ def init_vignette_list(task_df: pd.DataFrame) -> List[BenefitUnit]:
         else:
             raise ValueError("Family can only exhibit a single type of claiming behaviour at a time.")
 
+        if vig_df["disability_costs"].unique().__len__() == 1:
+            disability_costs = vig_df["disability_costs"].unique()[0]
+
         records = vig_df.to_records()
         people_array = []
         for rec in records:
@@ -60,7 +63,8 @@ def init_vignette_list(task_df: pd.DataFrame) -> List[BenefitUnit]:
                    housing_costs_percentile,
                    claims_housing,
                    childcare_costs,
-                   claims_childcare
+                   claims_childcare,
+                   disability_costs
                    )
 
         bu = BenefitUnit(f,
@@ -79,7 +83,7 @@ def output_vignette_outcomes(out_df: pd.DataFrame, out_path: str):
 
 def main():
     path = r"C:\Users\EdwardMcPherson\WPI Economics Dropbox\Edward McPherson\WPI team folder\CSPS\Legatum - poverty " \
-           r"work\LI Policy Simulator\Vignettes\vignette_list.xlsx"
+           r"work\LI Policy Simulator\Vignettes\vignette_list_disability_cost_comparison.xlsx"
 
     # Import list of vignettes to do
     task_df = import_vignette_list(path)
