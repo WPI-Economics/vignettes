@@ -1,5 +1,5 @@
 
-from .classes import Cost, Family, LHACategory
+from vignettes.classes.classes import Cost, Family, LHACategory
 
 # These are 2020-21 LHA rates - may need to find a 2019-20 LHA lookup.
 

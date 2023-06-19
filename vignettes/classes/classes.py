@@ -2,7 +2,7 @@ from abc import ABC, abstractmethod
 from typing import List
 from enum import Enum, auto
 
-from . import tax, poverty_lines, equivalisation
+from vignettes.classes import tax, poverty_lines, equivalisation
 
 
 class DisabilityStatus(Enum):
@@ -64,7 +64,7 @@ class WorkAllowances(Enum):
 
 class ChildcareCostCategories(Enum):
     """ Different options for childcare"""
-    NONE = auto()
+    NO_COSTS = auto()
     UC_THRESHOLD = auto()
     ADDITIONAL = auto()
 

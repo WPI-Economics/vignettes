@@ -2,13 +2,15 @@ from typing import List
 import pandas as pd
 from datetime import datetime as dt
 
-from classes import config
-from classes.classes import Person, Family, BenefitUnit
+from vignettes.classes import config
+from vignettes.classes.classes import Person, Family, BenefitUnit
 
 
 def import_vignette_list(path: str) -> pd.DataFrame:
     # Read in as dataframe
-    task_df = pd.read_excel(path)
+    task_df = pd.read_excel(path, dtype={
+        "childcare_costs": "str",
+    })
     return task_df
 
 
@@ -76,8 +78,8 @@ def output_vignette_outcomes(out_df: pd.DataFrame, out_path: str):
 
 
 def main():
-    path = r"C:\Users\edward.mcpherson\Dropbox (Prosperity Index)\Legatum - poverty work\LI Policy " \
-           r"Simulator\Vignettes\vignette_list.xlsx"
+    path = r"C:\Users\EdwardMcPherson\WPI Economics Dropbox\Edward McPherson\WPI team folder\CSPS\Legatum - poverty " \
+           r"work\LI Policy Simulator\Vignettes\vignette_list.xlsx"
 
     # Import list of vignettes to do
     task_df = import_vignette_list(path)
@@ -117,8 +119,9 @@ def main():
                          )
 
     timestamp = dt.now().strftime("%Y-%m-%d_%H-%M-%S")
-    out_path = rf"C:\Users\edward.mcpherson\Dropbox (Prosperity Index)\Legatum - poverty work\LI Policy " \
-               rf"Simulator\Vignettes\output\vignette_outcomes_{timestamp}.xlsx"
+    out_path = rf"C:\Users\EdwardMcPherson\WPI Economics Dropbox\Edward McPherson\WPI team folder\CSPS\Legatum - "\
+               rf"poverty work\LI Policy Simulator\Vignettes\output\vignette_outcomes_{timestamp}.xlsx"
+
     output_vignette_outcomes(merged_df, out_path)
 
 

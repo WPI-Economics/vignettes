@@ -6,7 +6,7 @@ BASIC_RATE = 0.2
 HIGHER_THRESHOLD = 967
 HIGHER_RATE = 0.4
 
-ADDITIONAL_THRESHOLD = 2885
+ADDITIONAL_THRESHOLD = 2407
 ADDITIONAL_RATE = 0.45
 
 # NICs - note that these are aligned to income tax thresholds

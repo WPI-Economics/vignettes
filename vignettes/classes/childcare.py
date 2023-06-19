@@ -1,5 +1,5 @@
 
-from .classes import Family, Cost, ChildcareCostCategories
+from vignettes.classes.classes import Family, Cost, ChildcareCostCategories
 
 SINGLE_CHILD = 149
 MULTIPLE_CHILDREN = 256
@@ -13,7 +13,7 @@ class Childcare(Cost):
         childcare_costs = family.childcare_costs
         num_children = family.num_children
 
-        if childcare_costs == ChildcareCostCategories.NONE:
+        if childcare_costs == ChildcareCostCategories.NO_COSTS:
             return 0.0
 
         elif childcare_costs == ChildcareCostCategories.UC_THRESHOLD:

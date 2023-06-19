@@ -1,34 +1,34 @@
 from typing import List
-from . import housing, childcare
-from .classes import Person, Benefit, Family, LHACategory, WorkAllowances, FamilyType, DisabilityStatus
+from vignettes.classes import housing, childcare
+from vignettes.classes.classes import Person, Benefit, Family, LHACategory, WorkAllowances, FamilyType, DisabilityStatus
 
 
 # All awards in 2019-20 amounts
 
 STANDARD_ALLOWANCES = {
-    FamilyType.YOUNG_SINGLE: 61.23,
-    FamilyType.SINGLE: 77.29,
-    FamilyType.YOUNG_COUPLE: 96.10,
-    FamilyType.COUPLE: 121.32
+    FamilyType.YOUNG_SINGLE: 67.41,
+    FamilyType.SINGLE: 85.09,
+    FamilyType.YOUNG_COUPLE: 105.81,
+    FamilyType.COUPLE: 133.57
 }
 
-LCWRA = 81.76
+LCWRA = 90.01
 
 DISABLED_CHILD_ADDITIONS = {
-    DisabilityStatus.DISABLED: 30.67,
-    DisabilityStatus.SEVERELY_DISABLED: 95.74
+    DisabilityStatus.DISABLED: 33.76,
+    DisabilityStatus.SEVERELY_DISABLED: 105.44
 }
 
 WORK_ALLOWANCES = {
     WorkAllowances.NONE: 0,
-    WorkAllowances.LOWER: 79.38,
-    WorkAllowances.HIGHER: 132.23
+    WorkAllowances.LOWER: 87.40,
+    WorkAllowances.HIGHER: 145.59
 }
 
 UC_TAPER_RATE = 0.55
 
-FIRST_CHILD = 66.92
-ADDITIONAL_CHILD = 56.44
+FIRST_CHILD = 62.21
+ADDITIONAL_CHILD = 62.21
 TWO_CHILD_LIMIT = True
 
 
