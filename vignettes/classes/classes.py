@@ -90,7 +90,7 @@ class Family:
                  identity: int,
                  people: List[Person],
                  location: str,
-                 housing_costs: int,
+                 housing_costs: str,
                  claims_housing: bool,
                  childcare_costs: str,
                  claims_childcare: bool,

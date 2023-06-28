@@ -96,7 +96,7 @@ def calc_lha(location: str, lha_category: LHACategory) -> float:
     :return:
     """
 
-    return housing.HOUSING_COSTS[30][location][lha_category]
+    return housing.HOUSING_COSTS["LHA"][location][lha_category]
 
 
 class UCChildcare(Benefit):

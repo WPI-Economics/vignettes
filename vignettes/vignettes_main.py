@@ -29,7 +29,7 @@ def init_vignette_list(task_df: pd.DataFrame) -> List[BenefitUnit]:
             raise ValueError("Family must be specified entirely in one location.")
 
         if vig_df["housing_costs_percentile"].unique().__len__() == 1:
-            housing_costs_percentile = vig_df["housing_costs_percentile"].unique()[0]
+            housing_costs_percentile = str(vig_df["housing_costs_percentile"].unique()[0])
         else:
             raise ValueError("Family must be specified with a single level of housing costs.")
 
@@ -83,7 +83,7 @@ def output_vignette_outcomes(out_df: pd.DataFrame, out_path: str):
 
 def main():
     path = r"C:\Users\EdwardMcPherson\WPI Economics Dropbox\Edward McPherson\WPI team folder\CSPS\Legatum - poverty " \
-           r"work\LI Policy Simulator\Vignettes\vignette_list_disability_cost_comparison.xlsx"
+           r"work\LI Policy Simulator\Vignettes\vignette_list_earnings_increase.xlsx"
 
     # Import list of vignettes to do
     task_df = import_vignette_list(path)
