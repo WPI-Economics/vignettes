@@ -1,8 +1,8 @@
 
 from vignettes.classes.classes import Benefit, Family
 
-FIRST_CHILD = 21.80
-ADDITIONAL_CHILD = 14.45
+FIRST_CHILD = 24.00
+ADDITIONAL_CHILD = 15.90
 
 
 class ChildBenefit(Benefit):
