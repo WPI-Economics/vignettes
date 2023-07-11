@@ -39,27 +39,27 @@ def test_person_net_income() -> None:
 
 def test_family_type_single() -> None:
     p = Person(30, "not_disabled", 0, 0)
-    f = Family(0, [p], "Central London", 30, False, "none", False)
+    f = Family(0, [p], "Central London", "LHA", False, "no_costs", False, "default")
     assert f.famtype == FamilyType.SINGLE
 
 
 def test_family_type_couple() -> None:
     p1 = Person(30, "not_disabled", 0, 0)
     p2 = Person(21, "not_disabled", 0, 0)
-    f = Family(0, [p1, p2], "Central London", 30, False, "none", False)
+    f = Family(0, [p1, p2], "Central London", "LHA", False, "no_costs", False, "default")
     assert f.famtype == FamilyType.COUPLE
 
 
 def test_family_type_young_single() -> None:
     p = Person(24, "not_disabled", 0, 0)
-    f = Family(0, [p], "Central London", 30, False, "none", False)
+    f = Family(0, [p], "Central London", "LHA", False, "no_costs", False, "default")
     assert f.famtype == FamilyType.YOUNG_SINGLE
 
 
 def test_family_type_young_couple() -> None:
     p1 = Person(21, "not_disabled", 0, 0)
     p2 = Person(23, "not_disabled", 0, 0)
-    f = Family(0, [p1, p2], "Central London", 30, False, "none", False)
+    f = Family(0, [p1, p2], "Central London", "LHA", False, "no_costs", False, "default")
     assert f.famtype == FamilyType.YOUNG_COUPLE
 
 
@@ -67,7 +67,7 @@ def test_identify_adults() -> None:
     p1 = Person(21, "not_disabled", 0, 0)
     p2 = Person(23, "not_disabled", 0, 0)
     p3 = Person(17, "not_disabled", 0, 0)
-    f = Family(0, [p1, p2, p3], "Central London", 30, False, "none", False)
+    f = Family(0, [p1, p2, p3], "Central London", "LHA", False, "no_costs", False, "default")
     assert (f.adults == [p1, p2]) and f.children == [p3]
 
 
@@ -76,7 +76,7 @@ def test_num_children_two() -> None:
     p2 = Person(23, "not_disabled", 0, 0)
     p3 = Person(17, "not_disabled", 0, 0)
     p4 = Person(11, "not_disabled", 0, 0)
-    f = Family(0, [p1, p2, p3, p4], "Central London", 30, False, "none", False)
+    f = Family(0, [p1, p2, p3, p4], "Central London", "LHA", False, "no_costs", False, "default")
     assert f.num_children == 2
 
 
@@ -84,6 +84,6 @@ def test_num_children_one() -> None:
     p1 = Person(21, "not_disabled", 0, 0)
     p2 = Person(23, "not_disabled", 0, 0)
     p3 = Person(17, "not_disabled", 0, 0)
-    f = Family(0, [p1, p2, p3], "Central London", 30, False, "none", False)
+    f = Family(0, [p1, p2, p3], "Central London", "LHA", False, "no_costs", False, "default")
     assert f.num_children == 1
 

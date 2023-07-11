@@ -18,7 +18,7 @@ def test_child_benefit_object() -> None:
     p1 = Person(30, "not_disabled", 0, 0)
     p2 = Person(30, "not_disabled", 0, 0)
     p3 = Person(14, "not_disabled", 0, 0)
-    f = Family(0, [p1, p2, p3], "Central London", 30, False, "none", False)
+    f = Family(0, [p1, p2, p3], "Central London", "LHA", False, "no_costs", False, "default")
 
     ben = ChildBenefit()
 

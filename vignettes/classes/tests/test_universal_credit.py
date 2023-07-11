@@ -50,12 +50,12 @@ def test_calc_uc_disabled_children_additions() -> None:
 
 
 def test_lha_scunthorpe_flatshare() -> None:
-    lha_rate_scunthorpe_flatshare = housing.HOUSING_COSTS[30]["Scunthorpe"][classes.LHACategory.A]
+    lha_rate_scunthorpe_flatshare = housing.HOUSING_COSTS["LHA"]["Scunthorpe"][classes.LHACategory.A]
     assert universal_credit.calc_lha("Scunthorpe", classes.LHACategory.A) == lha_rate_scunthorpe_flatshare
 
 
 def test_lha_london_one_bed() -> None:
-    lha_rate_london_one_bed = housing.HOUSING_COSTS[30]["Central London"][classes.LHACategory.B]
+    lha_rate_london_one_bed = housing.HOUSING_COSTS["LHA"]["Central London"][classes.LHACategory.B]
     assert universal_credit.calc_lha("Central London", classes.LHACategory.B) == lha_rate_london_one_bed
 
 # TODO - write some unit tests for the taper!
