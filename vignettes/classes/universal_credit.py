@@ -3,7 +3,37 @@ from vignettes.classes import housing, childcare
 from vignettes.classes.classes import Person, Benefit, Cost, Family, LHACategory, WorkAllowances, FamilyType, \
     DisabilityStatus, UCDeductionCategories
 
+# 2021-22 awards, with a benefit floor applied.
 
+STANDARD_ALLOWANCES = {
+    FamilyType.YOUNG_SINGLE: 88.62,
+    FamilyType.SINGLE: 88.62,
+    FamilyType.YOUNG_COUPLE: 152.54,
+    FamilyType.COUPLE: 152.54
+}
+
+LCWRA = 79.30
+
+DISABLED_CHILD_ADDITIONS = {
+    DisabilityStatus.DISABLED: 29.74,
+    DisabilityStatus.SEVERELY_DISABLED: 92.80
+}
+
+WORK_ALLOWANCES = {
+    WorkAllowances.NONE: 0,
+    WorkAllowances.LOWER: 67.62,
+    WorkAllowances.HIGHER: 118.85
+}
+
+UC_TAPER_RATE = 0.55
+
+FIRST_CHILD = 65.20
+ADDITIONAL_CHILD = 54.71
+TWO_CHILD_LIMIT = False
+
+MAX_DEDUCTION = 0.25
+
+'''
 # All awards in 2023-24 amounts
 
 STANDARD_ALLOWANCES = {
@@ -33,7 +63,7 @@ ADDITIONAL_CHILD = 62.21
 TWO_CHILD_LIMIT = True
 
 MAX_DEDUCTION = 0.25
-
+'''
 
 class UCStandardAllowance(Benefit):
 

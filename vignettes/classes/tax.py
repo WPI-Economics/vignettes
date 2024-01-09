@@ -1,4 +1,22 @@
 
+# 2021-22 amounts
+# Income Tax
+PERSONAL_ALLOWANCE = 242
+BASIC_RATE = 0.2
+
+HIGHER_THRESHOLD = 967
+HIGHER_RATE = 0.4
+
+ADDITIONAL_THRESHOLD = 2885
+ADDITIONAL_RATE = 0.45
+
+# NICs - note that these are aligned to income tax thresholds
+PRIMARY_THRESHOLD = 242
+BASIC_NIC_RATE = 0.12
+UPPER_EARNINGS_LIMIT = 967
+HIGHER_NIC_RATE = 0.02
+
+'''
 # Income Tax
 PERSONAL_ALLOWANCE = 242
 BASIC_RATE = 0.2
@@ -14,6 +32,7 @@ PRIMARY_THRESHOLD = 242
 BASIC_NIC_RATE = 0.12
 UPPER_EARNINGS_LIMIT = 967
 HIGHER_NIC_RATE = 0.02
+'''
 
 # Note - we do not model the personal allowance clawback at £100,000 per annum
 
