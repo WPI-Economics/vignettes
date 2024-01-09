@@ -76,6 +76,12 @@ class DisabilityCostCategories(Enum):
     ADDITIONAL = auto()
 
 
+class UCDeductionCategories(Enum):
+    """ Different options for UC deductions """
+    NONE = auto()
+    FULL = auto()
+
+
 class FamilyType(Enum):
     """ Different options for core family type"""
     YOUNG_SINGLE = auto()
@@ -94,7 +100,8 @@ class Family:
                  claims_housing: bool,
                  childcare_costs: str,
                  claims_childcare: bool,
-                 disability_costs: str
+                 disability_costs: str,
+                 uc_deduction: str
                  ):
 
         # Set id
@@ -134,6 +141,7 @@ class Family:
         self.housing_costs = housing_costs
         self.childcare_costs = ChildcareCostCategories[childcare_costs.upper()]
         self.disability_costs = DisabilityCostCategories[disability_costs.upper()]
+        self.uc_deduction = UCDeductionCategories[uc_deduction.upper()]
 
     def determine_family_type(self) -> FamilyType:
 

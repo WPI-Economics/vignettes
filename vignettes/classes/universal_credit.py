@@ -1,9 +1,10 @@
 from typing import List
 from vignettes.classes import housing, childcare
-from vignettes.classes.classes import Person, Benefit, Family, LHACategory, WorkAllowances, FamilyType, DisabilityStatus
+from vignettes.classes.classes import Person, Benefit, Cost, Family, LHACategory, WorkAllowances, FamilyType, \
+    DisabilityStatus, UCDeductionCategories
 
 
-# All awards in 2019-20 amounts
+# All awards in 2023-24 amounts
 
 STANDARD_ALLOWANCES = {
     FamilyType.YOUNG_SINGLE: 67.41,
@@ -30,6 +31,8 @@ UC_TAPER_RATE = 0.55
 FIRST_CHILD = 62.21
 ADDITIONAL_CHILD = 62.21
 TWO_CHILD_LIMIT = True
+
+MAX_DEDUCTION = 0.25
 
 
 class UCStandardAllowance(Benefit):
@@ -193,3 +196,13 @@ class UniversalCredit(Benefit):
 
         summation = sum([element.calculate_award(family) for element in self.universal_credit_elements])
         return max(summation, 0)
+
+
+class UniversalCreditDeduction(Cost):
+
+    def calculate_cost(self, family: Family) -> float:
+        uc_std_allowance = UCStandardAllowance().calculate_award(family)
+        if family.uc_deduction == UCDeductionCategories.FULL:
+            return uc_std_allowance * MAX_DEDUCTION
+        else:
+            return 0.0
