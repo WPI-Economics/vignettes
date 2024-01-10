@@ -1,9 +1,12 @@
 from abc import ABC, abstractmethod
 from typing import List
 from enum import Enum, auto
+import logging
 
 from vignettes.classes import tax, poverty_lines, equivalisation
 
+logger = logging.getLogger("vignettes")
+logger.propagate = False
 
 class DisabilityStatus(Enum):
     NOT_DISABLED = auto()
@@ -103,6 +106,8 @@ class Family:
                  disability_costs: str,
                  uc_deduction: str
                  ):
+
+        logger.info(f"Calculating for family {identity}...")
 
         # Set id
         self.identity = identity
@@ -240,12 +245,18 @@ class BenefitUnit:
 
         # Calculate total benefit award
         self.total_award = self.calculate_total_award()
+        logger.info(f"Family {self.family.identity} has a total benefit award of: { self.total_award:.2f}")
 
         # Calculate total costs
         self.total_costs = self.calculate_total_costs()
+        logger.info(f"Family {self.family.identity} has total costs of: {self.total_costs:.2f}")
 
         # Get total income from family
         self.net_income = self.family.net_income
+        logger.info(f"Family {self.family.identity} has after-tax earned income of: {self.net_income:.2f}")
+
+        self.tra = self.get_total_resources_available()
+        logger.info(f"Family {self.family.identity} has total resources available of: {self.tra:.2f}")
 
     def calculate_total_award(self) -> float:
         total_award = 0

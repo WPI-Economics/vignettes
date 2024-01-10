@@ -1,9 +1,18 @@
 from typing import List
 import pandas as pd
 from datetime import datetime as dt
+import logging
 
 from vignettes.classes import config
 from vignettes.classes.classes import Person, Family, BenefitUnit
+from vignettes.utils.log_setup import __setup_logger
+
+LOGGING_DIR = r"C:\Users\EdwardMcPherson\WPI Economics Dropbox\Edward McPherson\WPI team folder\CSPS\Legatum - poverty " \
+              r"work\LI Policy Simulator\Vignettes\Logging"
+
+logger = logging.getLogger("vignettes")
+logger.propagate = False
+__setup_logger(logger, logging_dir=LOGGING_DIR)
 
 
 def import_vignette_list(path: str) -> pd.DataFrame:
@@ -102,7 +111,7 @@ def main():
     # Do each vignette
     poverty_status = dict()
     for vig in vig_list:
-        poverty_status[vig.identity] = [vig.get_total_resources_available(),
+        poverty_status[vig.identity] = [vig.tra,
                                         # vig.get_poverty_lines()["minimum income standard"],
                                         # vig.get_poverty_status(vig.get_poverty_lines()["minimum income standard"]),
                                         vig.get_poverty_lines()["poverty line"],
