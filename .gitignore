@@ -4,3 +4,4 @@ vignettes/.idea
 .idea
 vignettes/classes/__pycache__
 vignettes/classes/tests/__pycache__
+vignettes/utils/__pycache__

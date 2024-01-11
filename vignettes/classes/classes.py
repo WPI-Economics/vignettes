@@ -79,6 +79,13 @@ class DisabilityCostCategories(Enum):
     ADDITIONAL = auto()
 
 
+class LimitedCapacityForWork(Enum):
+    """ Different LCWRA options """
+    NONE = 0 # neither adult is disabled
+    INDIVIDUAL = 1 # one adult in a family is disabled
+    COUPLE = 2 # both adults in a family are disabled
+
+
 class UCDeductionCategories(Enum):
     """ Different options for UC deductions """
     NONE = auto()
@@ -122,7 +129,8 @@ class Family:
 
         # Disability status
         self.disabled = any([p.disabled for p in self.people])
-        self.limited_capability_for_work = any([adult.disabled for adult in self.adults])
+        disabled_adult_count = sum([adult.disabled for adult in self.adults])
+        self.limited_capability_for_work = LimitedCapacityForWork(disabled_adult_count)
 
         # Set claim status
         self.claims_housing = claims_housing

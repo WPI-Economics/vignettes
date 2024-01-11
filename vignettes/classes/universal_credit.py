@@ -1,8 +1,62 @@
 from typing import List
 from vignettes.classes import housing, childcare
 from vignettes.classes.classes import Person, Benefit, Cost, Family, LHACategory, WorkAllowances, FamilyType, \
-    DisabilityStatus, UCDeductionCategories
+    DisabilityStatus, UCDeductionCategories, LimitedCapacityForWork
 
+# 2021-22 awards, with benefit floor applied and additional benefits for those with no expectations
+
+##################################################################################
+# Additional elements for anti-poverty guarantee #################################
+
+LCWRA_ADDITION = 9.06
+
+# False in the current welfare system
+# Add to true to allow a BU with two disabled people to claim the LCWRA twice
+SECOND_LCWRA = {
+    "Enabled": True,
+    "Value": 64.24
+}
+
+YOUNG_CHILD_ADDITION = {
+    "Enabled": True,
+    "Value": 63.04,
+    "Cutoff": 2
+}
+
+# Might we also need an addition to the disabled child element? Investigate.
+DISABLED_CHILD_ADDITION_ADDITION = 9.18
+
+#####################################################################################
+
+STANDARD_ALLOWANCES = {
+    FamilyType.YOUNG_SINGLE: 88.62,
+    FamilyType.SINGLE: 88.62,
+    FamilyType.YOUNG_COUPLE: 152.54,
+    FamilyType.COUPLE: 152.54
+}
+
+LCWRA = (79.30 + LCWRA_ADDITION)
+
+DISABLED_CHILD_ADDITIONS = {
+    DisabilityStatus.DISABLED: 29.74 + DISABLED_CHILD_ADDITION_ADDITION,
+    DisabilityStatus.SEVERELY_DISABLED: 92.80
+}
+
+WORK_ALLOWANCES = {
+    WorkAllowances.NONE: 0,
+    WorkAllowances.LOWER: 67.62,
+    WorkAllowances.HIGHER: 118.85
+}
+
+UC_TAPER_RATE = 0.55
+
+FIRST_CHILD = 65.20
+ADDITIONAL_CHILD = 54.71
+TWO_CHILD_LIMIT = False
+
+MAX_DEDUCTION = 0.25
+
+'''
 # 2021-22 awards, with a benefit floor applied.
 
 STANDARD_ALLOWANCES = {
@@ -33,6 +87,7 @@ TWO_CHILD_LIMIT = False
 
 MAX_DEDUCTION = 0.25
 
+'''
 '''
 # All awards in 2023-24 amounts
 
@@ -163,9 +218,14 @@ class UCLCWRA(Benefit):
         return calc_uclcwra(limited_capability_for_work)
 
 
-def calc_uclcwra(limited_capability_for_work: bool) -> float:
-    if limited_capability_for_work:
+def calc_uclcwra(limited_capability_for_work: LimitedCapacityForWork) -> float:
+    if limited_capability_for_work is LimitedCapacityForWork.INDIVIDUAL:
         return LCWRA
+    elif limited_capability_for_work is LimitedCapacityForWork.COUPLE:
+        if SECOND_LCWRA["Enabled"]:
+            return LCWRA + SECOND_LCWRA["Value"]
+        else:
+            return LCWRA
     else:
         return 0.0
 
@@ -174,7 +234,7 @@ class UCDisabledChildAdditions(Benefit):
 
     def calculate_award(self, family: Family) -> float:
 
-        disabled_children = [ c for c in family.children if c.disabled ]
+        disabled_children = [c for c in family.children if c.disabled]
 
         return calc_uc_disabled_children_additions(disabled_children)
 
@@ -185,6 +245,24 @@ def calc_uc_disabled_children_additions(disabled_children: List[Person]) -> floa
         award += DISABLED_CHILD_ADDITIONS[c.disability]
 
     return award
+
+
+class UCYoungChildAddition(Benefit):
+
+    def calculate_award(self, family: Family) -> float:
+
+        if family.num_children > 0:
+            youngest_child = sorted(family.children, key=lambda x: x.age, reverse=False)[0]
+            return calc_uc_young_child_addition(youngest_child)
+        else:
+            return 0.0
+
+
+def calc_uc_young_child_addition(child: Person) -> float:
+    if (child.age < YOUNG_CHILD_ADDITION["Cutoff"]) & (YOUNG_CHILD_ADDITION["Enabled"]):
+        return YOUNG_CHILD_ADDITION["Value"]
+    else:
+        return 0.0
 
 
 class UCTaper(Benefit):
@@ -219,7 +297,8 @@ class UniversalCredit(Benefit):
         UCTaper(),
         UCChildcare(),
         UCLCWRA(),
-        UCDisabledChildAdditions()
+        UCDisabledChildAdditions(),
+        UCYoungChildAddition()
     ]
 
     def calculate_award(self, family: Family) -> float:
