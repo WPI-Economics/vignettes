@@ -1,4 +1,26 @@
 
+from vignettes.utils.read_params import read_params
+
+# Benefit amounts are read in from the parameter system file
+benefit_system = read_params()
+
+# Initialise these global variables, using the data from the parameter system file
+PERSONAL_ALLOWANCE = benefit_system["INCOME_TAX"]["PERSONAL_ALLOWANCE"]
+BASIC_RATE = benefit_system["INCOME_TAX"]["BASIC_RATE"]
+
+HIGHER_THRESHOLD = benefit_system["INCOME_TAX"]["HIGHER_THRESHOLD"]
+HIGHER_RATE = benefit_system["INCOME_TAX"]["HIGHER_RATE"]
+
+ADDITIONAL_THRESHOLD = benefit_system["INCOME_TAX"]["ADDITIONAL_THRESHOLD"]
+ADDITIONAL_RATE = benefit_system["INCOME_TAX"]["ADDITIONAL_RATE"]
+
+# NICs - note that these are aligned to income tax thresholds
+PRIMARY_THRESHOLD = benefit_system["NICS"]["PRIMARY_THRESHOLD"]
+BASIC_NIC_RATE = benefit_system["NICS"]["BASIC_NIC_RATE"]
+UPPER_EARNINGS_LIMIT = benefit_system["NICS"]["UPPER_EARNINGS_LIMIT"]
+HIGHER_NIC_RATE = benefit_system["NICS"]["HIGHER_NIC_RATE"]
+
+'''
 # 2021-22 amounts
 # Income Tax
 PERSONAL_ALLOWANCE = 242
@@ -15,6 +37,7 @@ PRIMARY_THRESHOLD = 242
 BASIC_NIC_RATE = 0.12
 UPPER_EARNINGS_LIMIT = 967
 HIGHER_NIC_RATE = 0.02
+'''
 
 '''
 # Income Tax

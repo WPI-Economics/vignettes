@@ -1,58 +1,37 @@
 
 from vignettes.classes.classes import Person, Benefit, Family, DisabilityStatus
+from vignettes.utils.read_params import read_params
 
 # For adults, assume those who are severely disabled receive the higher rate for both elements
 # And that those who are disabled receive the lower rate for both elements
 
-# 2021/22 amounts
+# Benefit amounts are read in from the parameter system file
+benefit_system = read_params()
 
+# Initialise these global variables, using the data from the parameter system file
 PIP_MOBILITY = {
-    DisabilityStatus.NOT_DISABLED: 00.00,
-    DisabilityStatus.DISABLED: 23.70,
-    DisabilityStatus.SEVERELY_DISABLED: 62.55
+    DisabilityStatus.NOT_DISABLED: 0.00,
+    DisabilityStatus.DISABLED: benefit_system["PIP"]["MOBILITY"]["STANDARD"],
+    DisabilityStatus.SEVERELY_DISABLED: benefit_system["PIP"]["MOBILITY"]["ENHANCED"]
 }
 PIP_DAILY_LIVING = {
     DisabilityStatus.NOT_DISABLED: 00.00,
-    DisabilityStatus.DISABLED: 60.00,
-    DisabilityStatus.SEVERELY_DISABLED: 89.60
+    DisabilityStatus.DISABLED: benefit_system["PIP"]["DAILY"]["STANDARD"],
+    DisabilityStatus.SEVERELY_DISABLED: benefit_system["PIP"]["DAILY"]["ENHANCED"]
 }
 
 # Similar approach for DLA for children.
 DLA_MOBILITY = {
     DisabilityStatus.NOT_DISABLED: 00.00,
-    DisabilityStatus.DISABLED: 23.70,
-    DisabilityStatus.SEVERELY_DISABLED: 62.55
+    DisabilityStatus.DISABLED: benefit_system["DLA_CHILD"]["MOBILITY"]["LOWER"],
+    DisabilityStatus.SEVERELY_DISABLED: benefit_system["DLA_CHILD"]["MOBILITY"]["HIGHER"]
 }
 DLA_CARE = {
     DisabilityStatus.NOT_DISABLED: 00.00,
-    DisabilityStatus.DISABLED: 23.70,
-    DisabilityStatus.SEVERELY_DISABLED: 89.60
+    DisabilityStatus.DISABLED: benefit_system["DLA_CHILD"]["CARE"]["MIDDLE"],
+    DisabilityStatus.SEVERELY_DISABLED: benefit_system["DLA_CHILD"]["CARE"]["HIGHEST"]
 }
 
-'''
-PIP_MOBILITY = {
-    DisabilityStatus.NOT_DISABLED: 00.00,
-    DisabilityStatus.DISABLED: 26.90,
-    DisabilityStatus.SEVERELY_DISABLED: 71.00
-}
-PIP_DAILY_LIVING = {
-    DisabilityStatus.NOT_DISABLED: 00.00,
-    DisabilityStatus.DISABLED: 68.10,
-    DisabilityStatus.SEVERELY_DISABLED: 101.75
-}
-
-# Similar approach for DLA for children.
-DLA_MOBILITY = {
-    DisabilityStatus.NOT_DISABLED: 00.00,
-    DisabilityStatus.DISABLED: 26.90,
-    DisabilityStatus.SEVERELY_DISABLED: 71.00
-}
-DLA_CARE = {
-    DisabilityStatus.NOT_DISABLED: 00.00,
-    DisabilityStatus.DISABLED: 26.90,
-    DisabilityStatus.SEVERELY_DISABLED: 101.75
-}
-'''
 
 class PIP(Benefit):
 

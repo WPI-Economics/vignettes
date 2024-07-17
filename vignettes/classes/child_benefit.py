@@ -1,8 +1,13 @@
 
 from vignettes.classes.classes import Benefit, Family
+from vignettes.utils.read_params import read_params
 
-FIRST_CHILD = 21.15
-ADDITIONAL_CHILD = 14.00
+# Benefit amounts are read in from the parameter system file
+benefit_system = read_params()
+
+# Initialise these global variables, using the data from the parameter system file
+FIRST_CHILD = benefit_system["CHILD_BENEFIT"]["FIRST_CHILD"]
+ADDITIONAL_CHILD = benefit_system["CHILD_BENEFIT"]["ADDITIONAL_CHILD"]
 
 
 class ChildBenefit(Benefit):

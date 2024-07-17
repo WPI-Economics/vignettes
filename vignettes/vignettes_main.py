@@ -112,8 +112,6 @@ def main():
     poverty_status = dict()
     for vig in vig_list:
         poverty_status[vig.identity] = [vig.tra,
-                                        # vig.get_poverty_lines()["minimum income standard"],
-                                        # vig.get_poverty_status(vig.get_poverty_lines()["minimum income standard"]),
                                         vig.get_poverty_lines()["poverty line"],
                                         vig.get_poverty_status(vig.get_poverty_lines()["poverty line"]),
                                         vig.get_poverty_lines()["deep poverty line"],
@@ -124,8 +122,6 @@ def main():
     out_df = pd.DataFrame.from_dict(poverty_status,
                                     orient="index",
                                     columns=["TRA",
-                                             # "Minimum Income Standard (MIS)",
-                                             # "Below MIS",
                                              "Poverty Line",
                                              "In Poverty",
                                              "Deep Poverty Line",

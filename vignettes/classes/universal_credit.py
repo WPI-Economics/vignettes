@@ -2,59 +2,106 @@ from typing import List
 from vignettes.classes import housing, childcare
 from vignettes.classes.classes import Person, Benefit, Cost, Family, LHACategory, WorkAllowances, FamilyType, \
     DisabilityStatus, UCDeductionCategories, LimitedCapacityForWork
+from vignettes.utils.read_params import read_params
+
+# Benefit amounts are read in from the parameter system file
+benefit_system = read_params()
+
+# Initialise these global variables, using the data from the parameter system file
 
 # 2021-22 awards, with benefit floor applied and additional benefits for those with no expectations
 
 ##################################################################################
 # Additional elements for anti-poverty guarantee #################################
 
-LCWRA_ADDITION = 9.06
-
+#LCWRA_ADDITION = 9.06
+LCWRA_ADDITION = {
+    "Enabled": benefit_system["UC"]["APG"]["LCWRA_ADDITION"]["ENABLED"],
+    "Value": benefit_system["UC"]["APG"]["LCWRA_ADDITION"]["VALUE"]
+}
 # False in the current welfare system
 # Add to true to allow a BU with two disabled people to claim the LCWRA twice
+'''
 SECOND_LCWRA = {
     "Enabled": True,
     "Value": 64.24
 }
-
+'''
+SECOND_LCWRA = {
+    "Enabled": benefit_system["UC"]["APG"]["SECOND_LCWRA"]["ENABLED"],
+    "Value": benefit_system["UC"]["APG"]["SECOND_LCWRA"]["VALUE"]
+}
+'''
 YOUNG_CHILD_ADDITION = {
     "Enabled": True,
     "Value": 63.04,
     "Cutoff": 2
 }
+'''
+YOUNG_CHILD_ADDITION = {
+    "Enabled": benefit_system["UC"]["APG"]["YOUNG_CHILD_ADDITION"]["ENABLED"],
+    "Value": benefit_system["UC"]["APG"]["YOUNG_CHILD_ADDITION"]["VALUE"],
+    "Cutoff": benefit_system["UC"]["APG"]["YOUNG_CHILD_ADDITION"]["CUTOFF"]
+}
 
 # Might we also need an addition to the disabled child element? Investigate.
-DISABLED_CHILD_ADDITION_ADDITION = 9.18
+#DISABLED_CHILD_ADDITION_ADDITION = 9.18
+DISABLED_CHILD_ADDITION_ADDITION = {
+    "Enabled": benefit_system["UC"]["APG"]["DISABLED_CHILD_ADDITION_ADDITION"]["ENABLED"],
+    "Value": benefit_system["UC"]["APG"]["DISABLED_CHILD_ADDITION_ADDITION"]["VALUE"]
+}
 
 #####################################################################################
 
+'''
 STANDARD_ALLOWANCES = {
     FamilyType.YOUNG_SINGLE: 88.62,
     FamilyType.SINGLE: 88.62,
     FamilyType.YOUNG_COUPLE: 152.54,
     FamilyType.COUPLE: 152.54
 }
+'''
 
-LCWRA = (79.30 + LCWRA_ADDITION)
+STANDARD_ALLOWANCES = {
+    FamilyType.YOUNG_SINGLE: benefit_system["UC"]["STANDARD_ALLOWANCE"]["YOUNG_SINGLE"],
+    FamilyType.SINGLE: benefit_system["UC"]["STANDARD_ALLOWANCE"]["SINGLE"],
+    FamilyType.YOUNG_COUPLE: benefit_system["UC"]["STANDARD_ALLOWANCE"]["YOUNG_COUPLE"],
+    FamilyType.COUPLE: benefit_system["UC"]["STANDARD_ALLOWANCE"]["COUPLE"]
+}
 
+LCWRA = benefit_system["UC"]["LCWRA"]
+
+if LCWRA_ADDITION["Enabled"]:
+    LCWRA = LCWRA + LCWRA_ADDITION["Value"]
+
+'''
 DISABLED_CHILD_ADDITIONS = {
     DisabilityStatus.DISABLED: 29.74 + DISABLED_CHILD_ADDITION_ADDITION,
     DisabilityStatus.SEVERELY_DISABLED: 92.80
 }
+'''
+
+DISABLED_CHILD_ADDITIONS = {
+    DisabilityStatus.DISABLED: benefit_system["UC"]["DISABLED_CHILD_ADDITIONS"]["LOWER"],
+    DisabilityStatus.SEVERELY_DISABLED: benefit_system["UC"]["DISABLED_CHILD_ADDITIONS"]["HIGHER"]
+}
+
+if DISABLED_CHILD_ADDITION_ADDITION["Enabled"]:
+    DISABLED_CHILD_ADDITIONS[DisabilityStatus.DISABLED] = DISABLED_CHILD_ADDITIONS[DisabilityStatus.DISABLED] + DISABLED_CHILD_ADDITION_ADDITION["Value"]
 
 WORK_ALLOWANCES = {
     WorkAllowances.NONE: 0,
-    WorkAllowances.LOWER: 67.62,
-    WorkAllowances.HIGHER: 118.85
+    WorkAllowances.LOWER: benefit_system["UC"]["WORK_ALLOWANCES"]["LOWER"],
+    WorkAllowances.HIGHER: benefit_system["UC"]["WORK_ALLOWANCES"]["HIGHER"]
 }
 
-UC_TAPER_RATE = 0.55
+UC_TAPER_RATE = benefit_system["UC"]["TAPER_RATE"]
 
-FIRST_CHILD = 65.20
-ADDITIONAL_CHILD = 54.71
-TWO_CHILD_LIMIT = False
+FIRST_CHILD = benefit_system["UC"]["CHILDREN"]["FIRST_CHILD"]
+ADDITIONAL_CHILD = benefit_system["UC"]["CHILDREN"]["ADDITIONAL_CHILD"]
+TWO_CHILD_LIMIT = benefit_system["UC"]["CHILDREN"]["TWO_CHILD_LIMIT"]
 
-MAX_DEDUCTION = 0.25
+MAX_DEDUCTION = benefit_system["UC"]["MAX_DEDUCTION"]
 
 '''
 # 2021-22 awards, with a benefit floor applied.

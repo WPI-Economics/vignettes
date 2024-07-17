@@ -282,7 +282,7 @@ class BenefitUnit:
         return total_costs
 
     def get_poverty_lines(self) -> dict:
-        return {"minimum income standard": poverty_lines.MIS_COUPLE * self.family.equiv,
+        return {
                 "poverty line": poverty_lines.EQ_POV_LINE * self.family.equiv,
                 "deep poverty line": poverty_lines.EQ_DEEP_POV_LINE * self.family.equiv
                 }

@@ -1,8 +1,13 @@
 
 from vignettes.classes.classes import Family, Cost, ChildcareCostCategories
+from vignettes.utils.read_params import read_params
 
-SINGLE_CHILD = 149
-MULTIPLE_CHILDREN = 256
+# Benefit amounts are read in from the parameter system file
+benefit_system = read_params()
+
+# Initialise these global variables, using the data from the parameter system file
+SINGLE_CHILD = benefit_system["UC"]["CHILDCARE"]["SINGLE_CHILD"],
+MULTIPLE_CHILDREN = benefit_system["UC"]["CHILDCARE"]["MULTIPLE_CHILDREN"]
 
 
 class Childcare(Cost):
