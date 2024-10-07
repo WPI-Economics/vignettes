@@ -1,7 +1,18 @@
+import os
 import json
+from getpass import getuser
 
-PARAM_PATH = r"C:\Users\EdwardMcPherson\WPI Economics Dropbox\Edward McPherson\WPI team folder\CSPS\Legatum - poverty " \
-             r"work\LI Policy Simulator\Vignettes\parameter_systems\benefit_floor_apg_2022_23.json"
+username = getuser()
+
+fullname_lkup = {
+    "EdwardMcPherson": "Edward McPherson",
+    "MatthewTibbles": "Matthew Tibbles",
+    "EoghanMcCauley": "Eoghan McCauley"
+}
+
+DROPBOX_ROOT = fr"C:\Users\{username}\WPI Economics Dropbox\{fullname_lkup[username]}"
+
+PARAM_PATH = os.path.join(DROPBOX_ROOT, r"WPI team folder\CSPS\Legatum - poverty work\LI Policy Simulator\Vignettes\parameter_systems\benefit_floor_apg_2022_23.json")
 
 def read_params():
 

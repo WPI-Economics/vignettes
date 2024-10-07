@@ -1,3 +1,5 @@
+from getpass import getuser
+import os
 from typing import List
 import pandas as pd
 from datetime import datetime as dt
@@ -7,8 +9,24 @@ from vignettes.classes import config
 from vignettes.classes.classes import Person, Family, BenefitUnit
 from vignettes.utils.log_setup import __setup_logger
 
-LOGGING_DIR = r"C:\Users\EdwardMcPherson\WPI Economics Dropbox\Edward McPherson\WPI team folder\CSPS\Legatum - poverty " \
-              r"work\LI Policy Simulator\Vignettes\Logging"
+username = getuser()
+
+fullname_lkup = {
+    "EdwardMcPherson": "Edward McPherson",
+    "MatthewTibbles": "Matthew Tibbles",
+    "EoghanMcCauley": "Eoghan McCauley"
+}
+
+DROPBOX_ROOT = fr"C:\Users\{username}\WPI Economics Dropbox\{fullname_lkup[username]}"
+
+LOGGING_DIR = os.path.join(DROPBOX_ROOT, r"WPI team folder\CSPS\Legatum - poverty work\LI Policy Simulator\Vignettes\Logging")
+
+PATH = os.path.join(DROPBOX_ROOT, r"WPI team folder\CSPS\Legatum - poverty work\LI Policy Simulator\Vignettes\vignette_list.xlsx")
+
+PARAM_PATH = os.path.join(DROPBOX_ROOT, r"WPI team folder\CSPS\Legatum - poverty work\LI Policy Simulator\Vignettes\parameter_systems\benefit_floor_apg_2022_23.json")
+
+timestamp = dt.now().strftime("%Y-%m-%d_%H-%M-%S")
+OUT_PATH = os.path.join(DROPBOX_ROOT, r"WPI team folder\CSPS\Legatum - poverty work\LI Policy Simulator\Vignettes\output\vignette_outcomes_{timestamp}.xlsx")
 
 logger = logging.getLogger("vignettes")
 logger.propagate = False
@@ -99,8 +117,7 @@ def output_vignette_outcomes(out_df: pd.DataFrame, out_path: str):
 
 
 def main():
-    path = r"C:\Users\EdwardMcPherson\WPI Economics Dropbox\Edward McPherson\WPI team folder\CSPS\Legatum - poverty " \
-           r"work\LI Policy Simulator\Vignettes\vignette_list.xlsx"
+    path = PATH
 
     # Import list of vignettes to do
     task_df = import_vignette_list(path)
@@ -135,9 +152,7 @@ def main():
                          on="vignette_number"
                          )
 
-    timestamp = dt.now().strftime("%Y-%m-%d_%H-%M-%S")
-    out_path = rf"C:\Users\EdwardMcPherson\WPI Economics Dropbox\Edward McPherson\WPI team folder\CSPS\Legatum - "\
-               rf"poverty work\LI Policy Simulator\Vignettes\output\vignette_outcomes_{timestamp}.xlsx"
+    out_path = OUT_PATH
 
     output_vignette_outcomes(merged_df, out_path)
 
