@@ -1,36 +1,19 @@
-from getpass import getuser
+
 import os
 from typing import List
 import pandas as pd
 from datetime import datetime as dt
 import logging
 
-from vignettes.classes import config
+from vignettes.classes import costs_and_benefits
 from vignettes.classes.classes import Person, Family, BenefitUnit
+from vignettes.utils import config
 from vignettes.utils.log_setup import __setup_logger
 
-username = getuser()
-
-fullname_lkup = {
-    "EdwardMcPherson": "Edward McPherson",
-    "MatthewTibbles": "Matthew Tibbles",
-    "EoghanMcCauley": "Eoghan McCauley"
-}
-
-DROPBOX_ROOT = fr"C:\Users\{username}\WPI Economics Dropbox\{fullname_lkup[username]}"
-
-LOGGING_DIR = os.path.join(DROPBOX_ROOT, r"WPI team folder\CSPS\Legatum - poverty work\LI Policy Simulator\Vignettes\Logging")
-
-PATH = os.path.join(DROPBOX_ROOT, r"WPI team folder\CSPS\Legatum - poverty work\LI Policy Simulator\Vignettes\vignette_list.xlsx")
-
-PARAM_PATH = os.path.join(DROPBOX_ROOT, r"WPI team folder\CSPS\Legatum - poverty work\LI Policy Simulator\Vignettes\parameter_systems\benefit_floor_apg_2022_23.json")
-
-timestamp = dt.now().strftime("%Y-%m-%d_%H-%M-%S")
-OUT_PATH = os.path.join(DROPBOX_ROOT, r"WPI team folder\CSPS\Legatum - poverty work\LI Policy Simulator\Vignettes\output\vignette_outcomes_{timestamp}.xlsx")
 
 logger = logging.getLogger("vignettes")
 logger.propagate = False
-__setup_logger(logger, logging_dir=LOGGING_DIR)
+__setup_logger(logger, logging_dir=config.LOGGING_DIR)
 
 
 def import_vignette_list(path: str) -> pd.DataFrame:
@@ -103,8 +86,8 @@ def init_vignette_list(task_df: pd.DataFrame) -> List[BenefitUnit]:
                    )
 
         bu = BenefitUnit(f,
-                         config.BENEFITS,
-                         config.COSTS,
+                         costs_and_benefits.BENEFITS,
+                         costs_and_benefits.COSTS,
                          )
 
         vig_array.append(bu)
@@ -117,7 +100,7 @@ def output_vignette_outcomes(out_df: pd.DataFrame, out_path: str):
 
 
 def main():
-    path = PATH
+    path = config.PATH
 
     # Import list of vignettes to do
     task_df = import_vignette_list(path)
@@ -152,7 +135,8 @@ def main():
                          on="vignette_number"
                          )
 
-    out_path = OUT_PATH
+    timestamp = dt.now().strftime("%Y-%m-%d_%H-%M-%S")
+    out_path = os.path.join(config.OUT_DIR, f"vignette_outcomes_{timestamp}.xlsx")
 
     output_vignette_outcomes(merged_df, out_path)
 

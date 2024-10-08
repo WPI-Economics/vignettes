@@ -167,6 +167,7 @@ TWO_CHILD_LIMIT = True
 MAX_DEDUCTION = 0.25
 '''
 
+
 class UCStandardAllowance(Benefit):
 
     def calculate_award(self, family: Family) -> float:
